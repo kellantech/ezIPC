@@ -2,10 +2,10 @@ import time
 
 class client:
   def __init__(self,**kwargs):
-    try:self.prid=kwargs['prid']
+    try:self.prid=kwargs['id']
     except:self.prid=""
     
-    try:self.tm=int(kwargs['tm'])
+    try:self.tm=int(kwargs['time'])
     except:self.tm=0.5
     self.clid=0
   

@@ -16,5 +16,5 @@ for_ is the programID of the intened reciver (defult all)
 client = ezipc.client(**kwargs)
 ```
 kwargs:
-id (defult ""): the id of this client
+id (defult ""): the id of this client  
 time (defult 0.5): time between refreshes in seconds

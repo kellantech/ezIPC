@@ -1,5 +1,11 @@
 # ezIPC
 
+### install
+`pip install ezipc`
+
+##### import
+`import ezipc`
+
 #### create a server
 ```python
 server = ezipc.server()
@@ -15,6 +21,16 @@ for_ is the programID of the intened reciver (defult all)
 ```python
 client = ezipc.client(**kwargs)
 ```
-kwargs:
-id (defult ""): the id of this client  
+kwargs:  
+id (defult no ID): the id of this client  
 time (defult 0.5): time between refreshes in seconds
+
+`client.get()`
+
+return a list of all \[signal,data\] pairs in list format
+
+`client.clear()`
+
+Clears log
+
+recomended to call at end of program

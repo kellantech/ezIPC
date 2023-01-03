@@ -1,16 +1,19 @@
 import time
 
 class client:
-  def __init__(self,**kwargs):
-    try:self.prid=kwargs['id']
-    except:self.prid=""
-    
-    try:self.tm=int(kwargs['time'])
-    except:self.tm=0.5
-    self.clid=0
   
+  def __init__(self,**kwargs):
+    
+    try:self.id=kwargs['id']
+    except:self.id=""
+    
+    try:self.time=int(kwargs['time'])
+    except:self.time=0.5
+    
+    self.clid=0
+    self.handlers = {}
   def get(self):
-    time.sleep(self.tm)
+    time.sleep(self.time)
     with open("df.txt") as df:
       cv=df.read().split("\n")
     ccid=self.clid
@@ -25,22 +28,31 @@ class client:
         cmg = cvs[1]
         cda = cvs[2]
         cfor = cvs[3]
-        if cfor == ".ALL" or cfor == self.prid:
+        if cfor == ".ALL" or cfor == self.id:
           evnts.append([cmg,cda])
     self.clid=ccid 
     return evnts
-  
-  def clear(self):
-    with open("df.txt","w")as cf2:
-      cf2.write("")
-
-class server:
-    def __init__(self):
-      pass
-    def send(self,msg,data,for_=".ALL"):
+  def send(self,msg,data,for_=".ALL"):
       id = int(time.time())
       l = f"{id}:{msg}:{data}:{for_}\n"
     
       with open("df.txt","a") as df:
         df.write(l)
         df.flush()
+  def clear(self):
+    with open("df.txt","w")as cf2:
+      cf2.write("")
+
+  def add_handler(self,event,func):
+    self.handlers[event] = func
+  def handler_listen(self,quit=True):
+    while True:
+      events = self.get()
+      for event in events:
+        if event[0] == "QUIT":
+          break
+        else:
+          for evnt,fn in self.handlers.items():
+            if evnt == event[0]:
+              fn(event[1])
+              

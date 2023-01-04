@@ -1,4 +1,5 @@
 import time
+from os import path
 
 class client:
   
@@ -14,7 +15,7 @@ class client:
     self.handlers = {}
   def get(self):
     time.sleep(self.time)
-    with open("df.txt") as df:
+    with open(f"{path.dirname(__file__)}/df.txt") as df:
       cv=df.read().split("\n")
     ccid=self.clid
     evnts = []
@@ -36,11 +37,11 @@ class client:
       id = int(time.time())
       l = f"{id}:{msg}:{data}:{for_}\n"
     
-      with open("df.txt","a") as df:
+      with open(f"{path.dirname(__file__)}/df.txt","a") as df:
         df.write(l)
         df.flush()
   def clear(self):
-    with open("df.txt","w")as cf2:
+    with open(f"{path.dirname(__file__)}/df.txt","w")as cf2:
       cf2.write("")
 
   def add_handler(self,event,func):
